@@ -64,7 +64,7 @@ def progress(current, total, message, type):
 # start command
 @bot.on_message(filters.command(["start"]))
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-	bot.send_message(message.chat.id, START_TXT,
+	bot.send_message(message.chat.id, f"**__Hi** **{message.from_user.mention}__**,{START_TXT}",
 reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("• Update •", url="https://t.me/jn_bots"), InlineKeyboardButton("• help •", callback_data="help")]]), reply_to_message_id=message.id)
 
 @bot.on_callback_query()
@@ -258,7 +258,7 @@ def get_message_type(msg: pyrogram.types.messages_and_media.message.Message):
 		return "Text"
 	except: pass
 
-START_TXT = """**Hi** **{message.from_user.mention}**, ɪ ᴄᴀɴ ꜱᴀᴠᴇ ꜱᴀᴠɪɴɢ ʀᴇꜱᴛʀɪᴄᴛᴇᴅ ᴄᴏɴᴛᴇɴᴛ ꜰᴏʀ ᴘᴜʙʟɪᴄ/ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀɴɴᴇʟꜱ.\n\nᴍᴀɪɴᴛᴀɪɴ ʙʏ: <a href=https://t.me/Narayan_k_purohit>NK</a>"""
+START_TXT = """ɪ ᴄᴀɴ ꜱᴀᴠᴇ ꜱᴀᴠɪɴɢ ʀᴇꜱᴛʀɪᴄᴛᴇᴅ ᴄᴏɴᴛᴇɴᴛ ꜰᴏʀ ᴘᴜʙʟɪᴄ/ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀɴɴᴇʟꜱ.\n\nᴍᴀɪɴᴛᴀɪɴ ʙʏ: <a href=https://t.me/Narayan_k_purohit>NK</a>"""
 USAGE = """**FOR PUBLIC CHATS**
 
 **__just send post/s link__**
