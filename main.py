@@ -1,7 +1,7 @@
 import pyrogram
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton,CallbackQuery
 
 import time
 import os
@@ -66,25 +66,16 @@ def progress(current, total, message, type):
 # start command
 @bot.on_message(filters.command(["start"]))
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-	if len(message.command) != 2:
 	bot.send_message(message.chat.id, f"**__👋 Hi** **{message.from_user.mention}**, **I am Save Restricted Bot, I can send you restricted content by it's post link__**",
  elif  reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("• Update •", url="https://t.me/jn_bots"), InlineKeyboatdButton("help", callback_data="help")]]), reply_to_message_id=message.id)
-query.data == "help":
-        buttons = [[
-            InlineKeyboardButton(' ✯ ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ ✯', url='https://t.me/jn_bots')
-        ]]
-        await client.edit_message_media(
-            query.message.chat.id, 
-            query.message.id, 
-            InputMediaPhoto(random.choice(PICS))
-        )
-        reply_markup = InlineKeyboardMarkup(buttons)
-        await query.message.edit_text(
-            text=USAGE.format(query.from_user.mention),
-            reply_markup=reply_markup,
-            parse_mode=enums.ParseMode.HTML
-        )
 
+@bot.on_callback_query()
+def callback_query(client, CallbackQuery):
+	if callbackquery.data == "help":
+		buttons = [[
+            InlineKeyboardButton('⇌ Hᴏᴍᴇ ⇌', callback_data='start')
+        ]]
+		CallbackQuery.edit_message_text(USAGE, reply_markup = InlineKeyboardMarkup(buttons))
 
 @bot.on_message(filters.text)
 def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
