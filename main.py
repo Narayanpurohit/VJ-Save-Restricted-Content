@@ -78,7 +78,7 @@ def callback_query(client, CallbackQuery):
 @bot.on_callback_query()
 def callback_query(client, CallbackQuery):
 	if CallbackQuery.data == "start":
-		buttons = InlineKeyboardMarkup([[ InlineKeyboardButton("• Update •", url="https://t.me/jn_bots"), InlineKeyboardButton("• help •", callback_data="help")]]
+		buttons = InlineKeyboardMarkup([[ InlineKeyboardButton("• Update •", url="https://t.me/jn_bots"), InlineKeyboardButton("• help •", callback_data="help")]])
 		CallbackQuery.edit_message_text(START_TXT, reply_markup = InlineKeyboardMarkup(buttons))
 
 @bot.on_message(filters.text)
