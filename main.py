@@ -69,7 +69,7 @@ reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("• Update •", url=
 
 @bot.on_callback_query()
 def callback_query(client, CallbackQuery):
-	if callbackquery.data == "help":
+	if CallbackQuery.data == "help":
 		buttons = [[
             InlineKeyboardButton('⇌ Hᴏᴍᴇ ⇌', callback_data='start')
         ]]
