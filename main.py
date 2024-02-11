@@ -258,7 +258,7 @@ def get_message_type(msg: pyrogram.types.messages_and_media.message.Message):
 		return "Text"
 	except: pass
 
-START_TXT = f"**Hi** **{message.from_user.mention}**, ɪ ᴄᴀɴ ꜱᴀᴠᴇ ꜱᴀᴠɪɴɢ ʀᴇꜱᴛʀɪᴄᴛᴇᴅ ᴄᴏɴᴛᴇɴᴛ ꜰᴏʀ ᴘᴜʙʟɪᴄ/ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀɴɴᴇʟꜱ.\n\nᴍᴀɪɴᴛᴀɪɴ ʙʏ: <a href=https://t.me/Narayan_k_purohit>NK</a>"
+START_TXT = """**Hi** **{message.from_user.mention}**, ɪ ᴄᴀɴ ꜱᴀᴠᴇ ꜱᴀᴠɪɴɢ ʀᴇꜱᴛʀɪᴄᴛᴇᴅ ᴄᴏɴᴛᴇɴᴛ ꜰᴏʀ ᴘᴜʙʟɪᴄ/ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀɴɴᴇʟꜱ.\n\nᴍᴀɪɴᴛᴀɪɴ ʙʏ: <a href=https://t.me/Narayan_k_purohit>NK</a>"""
 USAGE = """**FOR PUBLIC CHATS**
 
 **__just send post/s link__**
