@@ -66,7 +66,7 @@ def progress(current, total, message, type):
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
 	bot.send_message(message.chat.id, f"**__Hi** **{message.from_user.mention}__**,{START_TXT}",
 reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("• Update •", url="https://t.me/jn_bots"), InlineKeyboardButton("• help •", callback_data="help")]]), reply_to_message_id=message.id,
-
+disable_web_page_preview = True
 )
 
 @bot.on_callback_query()
