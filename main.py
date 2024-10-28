@@ -68,26 +68,26 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
 
 
 @bot.on_message(filters.text)
-def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+async def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
 	print(message.text)
 
 	# joining chats
 	if "https://t.me/+" in message.text or "https://t.me/joinchat/" in message.text:
 
 		if acc is None:
-			bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
+			await bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 			return
 
 		try:
 			try: acc.join_chat(message.text)
 			except Exception as e: 
-				bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+				await bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
 				return
-			bot.send_message(message.chat.id,"**Chat Joined**", reply_to_message_id=message.id)
+			await bot.send_message(message.chat.id,"**Chat Joined**", reply_to_message_id=message.id)
 		except UserAlreadyParticipant:
-			bot.send_message(message.chat.id,"**Chat alredy Joined**", reply_to_message_id=message.id)
+			await bot.send_message(message.chat.id,"**Chat alredy Joined**", reply_to_message_id=message.id)
 		except InviteHashExpired:
-			bot.send_message(message.chat.id,"**Invalid Link**", reply_to_message_id=message.id)
+			await bot.send_message(message.chat.id,"**Invalid Link**", reply_to_message_id=message.id)
 
 	# getting message
 	elif "https://t.me/" in message.text:
@@ -105,22 +105,22 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 				chatid = int("-100" + datas[4])
 				
 				if acc is None:
-					bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
+					await bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 					return
 				
 				handle_private(message,chatid,msgid)
 				# try: handle_private(message,chatid,msgid)
-				# except Exception as e: bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+				# except Exception as e: await bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
 			
 			# bot
 			elif "https://t.me/b/" in message.text:
 				username = datas[4]
 				
 				if acc is None:
-					bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
+					await bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 					return
 				try: handle_private(message,username,msgid)
-				except Exception as e: bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+				except Exception as e: await bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
 
 			# public
 			else:
@@ -128,31 +128,31 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 
 				try: msg  = bot.get_messages(username,msgid)
 				except UsernameNotOccupied: 
-					bot.send_message(message.chat.id,f"**The username is not occupied by anyone**", reply_to_message_id=message.id)
+					await bot.send_message(message.chat.id,f"**The username is not occupied by anyone**", reply_to_message_id=message.id)
 					return
 
 				try: bot.copy_message(message.chat.id, msg.chat.id, msg.id,reply_to_message_id=message.id)
 				except:
 					if acc is None:
-						bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
+						await bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
 						return
 					try: handle_private(message,username,msgid)
-					except Exception as e: bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+					except Exception as e: await bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
 
 			# wait time
 			time.sleep(3)
 
 
 # handle private
-def handle_private(message: pyrogram.types.messages_and_media.message.Message, chatid: int, msgid: int):
+async def handle_private(message: pyrogram.types.messages_and_media.message.Message, chatid: int, msgid: int):
 		msg: pyrogram.types.messages_and_media.message.Message = acc.get_messages(chatid,msgid)
 		msg_type = get_message_type(msg)
 
 		if "Text" == msg_type:
-			bot.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=message.id)
+			await bot.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=message.id)
 			return
 
-		smsg = bot.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
+		smsg = await bot.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
 		dosta = threading.Thread(target=lambda:downstatus(f'{message.id}downstatus.txt',smsg),daemon=True)
 		dosta.start()
 		file = acc.download_media(msg, progress=progress, progress_args=[message,"down"])
