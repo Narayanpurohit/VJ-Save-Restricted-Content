@@ -1,21 +1,20 @@
 import pyrogram
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton,CallbackQuery
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 import time
 import os
 import threading
 import json
+from os import environ
 
-with open('config.json', 'r') as f: DATA = json.load(f)
-def getenv(var): return os.environ.get(var) or DATA.get(var, None)
-bot_token = getenv("TOKEN") 
-api_hash = getenv("HASH") 
-api_id = getenv("ID")
+bot_token = environ.get("TOKEN", "") 
+api_hash = environ.get("HASH", "") 
+api_id = int(environ.get("ID", ""))
 bot = Client("mybot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
-ss = getenv("STRING")
+ss = environ.get("STRING", "")
 if ss is not None:
 	acc = Client("myacc" ,api_id=api_id, api_hash=api_hash, session_string=ss)
 	acc.start()
@@ -64,24 +63,9 @@ def progress(current, total, message, type):
 # start command
 @bot.on_message(filters.command(["start"]))
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-	bot.send_message(message.chat.id, f"**__Hi** **{message.from_user.mention}__**,{START_TXT}",
-reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("• Update •", url="https://t.me/jn_bots"), InlineKeyboardButton("• help •", callback_data="help")]]), reply_to_message_id=message.id,
-disable_web_page_preview = True
-)
+	bot.send_message(message.chat.id, f"**__👋 Hi** **{message.from_user.mention}**, **I am Save Restricted Bot, I can send you restricted content by it's post link__**\n\n{USAGE}",
+	reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐 Update Channel", url="https://t.me/VJ_Botz")]]), reply_to_message_id=message.id)
 
-@bot.on_callback_query()
-def callback_query(client, CallbackQuery):
-	if CallbackQuery.data == "help":
-		buttons = [[
-            InlineKeyboardButton('⇌ Hᴏᴍᴇ ⇌', callback_data='start')
-        ]]
-		CallbackQuery.edit_message_text(USAGE, reply_markup = InlineKeyboardMarkup(buttons))
-		
-@bot.on_callback_query()
-def callback_query(client, CallbackQuery):
-	if CallbackQuery.data == "start":
-		buttons = InlineKeyboardMarkup([[ InlineKeyboardButton("• Update •", url="https://t.me/jn_bots"), InlineKeyboardButton("• help •", callback_data="help")]])
-		CallbackQuery.edit_message_text(START_TXT, reply_markup = InlineKeyboardMarkup(buttons))
 
 @bot.on_message(filters.text)
 def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
@@ -260,7 +244,7 @@ def get_message_type(msg: pyrogram.types.messages_and_media.message.Message):
 		return "Text"
 	except: pass
 
-START_TXT = """ɪ ᴄᴀɴ ꜱᴀᴠᴇ ꜱᴀᴠɪɴɢ ʀᴇꜱᴛʀɪᴄᴛᴇᴅ ᴄᴏɴᴛᴇɴᴛ ꜰᴏʀ ᴘᴜʙʟɪᴄ/ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀɴɴᴇʟꜱ.\n\nᴍᴀɪɴᴛᴀɪɴ ʙʏ: <a href=https://t.me/Narayan_k_purohit>NK</a>"""
+
 USAGE = """**FOR PUBLIC CHATS**
 
 **__just send post/s link__**
